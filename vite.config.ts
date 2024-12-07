@@ -17,4 +17,18 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    proxy: {
+      '/myapi/img': {
+        target: 'https://placehold.co',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/myapi\/img/, ''),
+      },
+      '/myapi': {
+        target: 'https://httpbin.org',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/myapi/, ''),
+      },
+    }
+  },
 })
